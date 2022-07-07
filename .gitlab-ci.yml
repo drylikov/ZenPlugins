@@ -1,0 +1,27 @@
+image: node:10.20.1
+
+cache:
+  paths:
+    - .yarn/
+    - node_modules/
+
+before_script:
+  - yarn --cache-folder .yarn
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  script:
+    - yarn --cache-folder .yarn test
+
+build:
+  stage: build
+  script:
+    - /opt/ZenPlugins/bin/build
+  only:
+    - master
+    - develop
+    - /^[^/]+_beta$/
